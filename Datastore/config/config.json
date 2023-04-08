@@ -1,0 +1,26 @@
+{
+  "development": {
+    "username": "james",
+
+    "password": "root",
+
+    "database": "questions_answers",
+    "host": "localhost",
+    "dialect": "postgres"
+  },
+
+  "test": {
+    "username": "postgres",
+    "password": null,
+    "database": "questions_answers_test",
+    "host": "localhost",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "postgres",
+    "password": null,
+    "database": "Questions-Answers",
+    "host": "localhost",
+    "dialect": "postgres"
+  }
+}
