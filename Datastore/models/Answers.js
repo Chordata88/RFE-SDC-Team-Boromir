@@ -2,7 +2,7 @@ module.exports = (sequelize, DataTypes) => {
 
   const Answers = sequelize.define('Answers', {
 
-    product_id: {
+    answer_id: {
 
       type: DataTypes.INTEGER,
       allowNull: false,

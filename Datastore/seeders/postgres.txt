@@ -5,12 +5,10 @@ which built the tables in my database. I then ran the following commands in post
 CREATE TABLE temp1 (product_id INTEGER PRIMARY KEY NOT NULL, product_name VARCHAR (150) NOT NULL, slogan VARCHAR (300), description VARCHAR(500), category VARCHAR (150), default_price INTEGER);
 
 COPY temp1 (product_id, product_name, slogan, description, category, default_price) from '/home/hrjcarrington/UGH/Senior Phase/SDC/RFE-SDC-Team-Boromir/QnA_Data/product.csv' DELIMITER ',' CSV HEADER;
+INSERT INTO "products" (product_id, product_name) SELECT product_id, product_name FROM temp1;
 
-INSERT INTO "Products" (product_id, product_name) SELECT product_id, product_name FROM temp1;
+Copy Questions: COPY questions (question_id, product_id, question_body, date, asker_name, asker_email, reported, question_helpfulness) from '/home/hrjcarrington/UGH/Senior Phase/SDC/RFE-SDC-Team-Boromir/QnA_Data/questions.csv' DELIMITER ',' CSV HEADER;
 
+Copy Answers: COPY answers (answer_id, question_id, answer_body, answer_date, answerer_name, answerer_email, reported, answer_helpfulness) from '/home/hrjcarrington/UGH/Senior Phase/SDC/RFE-SDC-Team-Boromir/QnA_Data/answers.csv' DELIMITER ',' CSV HEADER;
 
-Copy Questions: COPY "Questions" (question_id, product_id, question_body, date, asker_name, asker_email, reported, question_helpfulness) from '/home/hrjcarrington/UGH/Senior Phase/SDC/RFE-SDC-Team-Boromir/QnA_Data/questions.csv' DELIMITER ',' CSV HEADER;
-
-Copy Answers: COPY "Answers" (answer_id, question_id, answer_body, answer_date, answerer_name, answerer_email, reported, answer_helpfulness) from '/home/hrjcarrington/UGH/Senior Phase/SDC/RFE-SDC-Team-Boromir/QnA_Data/answers.csv' DELIMITER ',' CSV HEADER;
-
-Copy Photos: COPY "Photos" (photo_id, answer_id, url) from '/home/hrjcarrington/UGH/Senior Phase/SDC/RFE-SDC-Team-Boromir/QnA_Data/answers_photos.csv' DELIMITER ',' CSV HEADER;
+Copy Photos: COPY photos (photo_id, answer_id, url) from '/home/hrjcarrington/UGH/Senior Phase/SDC/RFE-SDC-Team-Boromir/QnA_Data/answers_photos.csv' DELIMITER ',' CSV HEADER;
