@@ -18,32 +18,66 @@ app.use(express.urlencoded({ extended: false }));
 
 //   })
 //   .catch(err => {
-//     console.error('Unable to connect to the database:', err);})
+//     console.error('Unable to connect to the database:', err);}) let data = console.log('questions before foreach:', questions);
+app.get("/qa/questions", async (req, res) => { let product_id = req.query.product_id;
+  console.log("req got here!", req.query.product_id);
+  //let attempts = [];
 
-app.get("/qa/questions", async (req, res) => {
-  console.log("req got here!", req.query.params);
-  await controllers.getQuestions().then((questions) => {
-    res.send(questions);
-  });
-}); //let data = await sequelize.query(`SELECT * FROM "Questions"`);  // let table = "Products"; // console.log(data); // let data = await sequelize.table.findAll(); let product_id = req.query.params.toString();
+  let data = await controllers.getQuestions(product_id).then(async (questions) => { // questions.results =
+    for (var i = 0; i < questions.results.length; i++) {
 
-app.post("/qa/questions", async (req, res) => {
+       questions.results[i].answers = await controllers.getAnswers(questions.results[i].question_id).then(async(answers) => { for (var j = 0; j < answers.length; j++) { console.log('jijfsaj;fkl:', answers[j]); answers[j].photos = await controllers.getPhotos(answers[j].answer_id); }; return answers })};
+
+        //};
+
+        return questions
+      }).then((updatedQuestions) => { console.log('updated questions:', updatedQuestions.results); res.json(updatedQuestions)}); //console.log('updated Questions', updatedQuestions);
+    })
+
+
+
+
+
+
+
+
+
+app.post("/qa/questions/", async (req, res) => {
   let body = req.body;
   console.log(body);
+
   await controllers
+
+
     .addQuestion(body, (err, msg) => {
       res.send(msg);
     })
+
     .catch((err) => res.send(err));
   res.end();
-}); //add a question
+}); //add a question console.log('req got here', req.params.question_id);
+app.post("/qa/questions/:question_id/answers", async (req, res) => { let body = req.body; console.log(body);  body.question_id = req.params.question_id; //console.log('updated body', body);
 
-//app.post() //add an answer
+await controllers.addAnswer(body, (msg) => {
+
+  res.send(msg);
+
+
+
+}).catch((err) => {res.send(err)}) //add an answer
+//.then((msg) => res.send(msg))
+
+
+
+
+}); //add an answer
 
 //app.put() //update helpfulness
 
-//app.put() //update reported status
+
+app.put('') //update reported status
 
 app.listen(port, () =>
+
   console.log(`backend server listening on port ${port}! the link: ${url}`)
 );
