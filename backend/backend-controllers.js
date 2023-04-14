@@ -30,7 +30,7 @@ const getQuestions = async (id) => {
 
 return {product_id: id, results: data}};
 
-const reportQuestion = () => {};
+const reportQuestion = async (id, callback) => {console.log('the q_id', id); await database.Questions.update({question_reported: 1}, {where: {question_id: id}}).then(() => database.Questions.findAll({where: {question_id: id}})).then((question) => {callback(question)}); };
 
 const reportAnswer = () => {};
 const helpfulQuestion = () => {};

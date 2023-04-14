@@ -75,7 +75,10 @@ await controllers.addAnswer(body, (msg) => {
 //app.put() //update helpfulness
 
 
-app.put('') //update reported status
+app.put('/qa/questions/:question_id/report', async (req, res) => {
+
+  console.log('req got here', req.query, req.params); await controllers.reportQuestion(req.params.question_id, (data) => {res.send(data)})
+}) //update reported status
 
 app.listen(port, () =>
 
