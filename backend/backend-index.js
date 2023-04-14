@@ -20,18 +20,18 @@ app.use(express.urlencoded({ extended: false }));
 //   .catch(err => {
 //     console.error('Unable to connect to the database:', err);}) let data = console.log('questions before foreach:', questions);
 app.get("/qa/questions", async (req, res) => { let product_id = req.query.product_id;
-  console.log("req got here!", req.query.product_id);
+ // console.log("req got here!", req.query.product_id);
   //let attempts = [];
 
   let data = await controllers.getQuestions(product_id).then(async (questions) => { // questions.results =
     for (var i = 0; i < questions.results.length; i++) {
 
-       questions.results[i].answers = await controllers.getAnswers(questions.results[i].question_id).then(async(answers) => { for (var j = 0; j < answers.length; j++) { console.log('jijfsaj;fkl:', answers[j]); answers[j].photos = await controllers.getPhotos(answers[j].answer_id); }; return answers })};
+       questions.results[i].answers = await controllers.getAnswers(questions.results[i].question_id).then(async(answers) => { for (var j = 0; j < answers.length; j++) {  answers[j].photos = await controllers.getPhotos(answers[j].answer_id); }; return answers })};
 
         //};
 
         return questions
-      }).then((updatedQuestions) => { console.log('updated questions:', updatedQuestions.results); res.json(updatedQuestions)}); //console.log('updated Questions', updatedQuestions);
+      }).then((updatedQuestions) => {  res.json(updatedQuestions)}); //console.log('updated Questions', updatedQuestions);
     })
 
 
@@ -44,7 +44,7 @@ app.get("/qa/questions", async (req, res) => { let product_id = req.query.produc
 
 app.post("/qa/questions/", async (req, res) => {
   let body = req.body;
-  console.log(body);
+  //console.log(body);
 
   await controllers
 
@@ -55,8 +55,8 @@ app.post("/qa/questions/", async (req, res) => {
 
     .catch((err) => res.send(err));
   res.end();
-}); //add a question console.log('req got here', req.params.question_id);
-app.post("/qa/questions/:question_id/answers", async (req, res) => { let body = req.body; console.log(body);  body.question_id = req.params.question_id; //console.log('updated body', body);
+}); //add a question console.log('req got here', req.params.question_id);console.log(body);
+app.post("/qa/questions/:question_id/answers", async (req, res) => { let body = req.body;   body.question_id = req.params.question_id; //console.log('updated body', body);
 
 await controllers.addAnswer(body, (msg) => {
 
@@ -77,8 +77,8 @@ await controllers.addAnswer(body, (msg) => {
 
 app.put('/qa/questions/:question_id/report', async (req, res) => {
 
-  console.log('req got here', req.query, req.params); await controllers.reportQuestion(req.params.question_id, (data) => {res.send(data)})
-}) //update reported status
+   await controllers.reportQuestion(req.params.question_id, (data) => {res.send(data)})
+}) //update reported status console.log('req got here', req.query, req.params);
 
 app.listen(port, () =>
 

@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('postgres://james:root@localhost:5432/questions_answers'); //build env file with login parameters
+const sequelize = new Sequelize('postgres://james:root@localhost:5432/questions_answers', {query: {raw:true}}); //build env file with login parameters
 sequelize
 
   .authenticate()
@@ -28,9 +28,9 @@ sequelize
 
 
 
-    }
+    },
 
-  }, {timestamps: false});
+  }, {timestamps: false}, {indexes: [{unique: true, fields: ['product_id']}]});
 
   const Questions = sequelize.define('questions', { //product_id: {type: Sequelize.BIGINT,},
 
@@ -57,7 +57,7 @@ sequelize
 type: Sequelize.INTEGER, defaultValue: 0
     },
 
-  }, {timestamps: false});
+  }, {timestamps: false}, {indexes: [{unique: true, fields: ['question_id']}]});
 
   const Answers = sequelize.define('answers', {
 
@@ -81,7 +81,7 @@ type: Sequelize.INTEGER, defaultValue: 0
   // Products.hasMany(Questions);
 
 answer_helpfulness: {type: Sequelize.INTEGER, defaultValue: 0}// Questions.belongsTo('Products', {foreignKey: 'product_id'});
-}, {timestamps: false});
+}, {timestamps: false}, {indexes: [{unique: true, fields: ['answer_id']}]});
 
 
 
@@ -97,7 +97,7 @@ const Photos = sequelize.define('photos', {
 
     url: {type: Sequelize.STRING}
 
-}, {timestamps: false});
+}, {timestamps: false}, {indexes: [{unique: true, fields: ['photo_id']}]});
 
 
 
@@ -126,11 +126,11 @@ const Photos = sequelize.define('photos', {
 
 
 
-Products.hasMany(Questions);
-Questions.belongsTo(Products, {foreignKey: 'product_id'});
+// Products.hasMany(Questions);
+// Questions.belongsTo(Products, {foreignKey: 'product_id'});
+// Questions.hasMany(Answers);
 
-
-
+// Answers.belongsTo(Questions, {foreignKey: 'question_id'});
 (async () => {
   await sequelize.sync({ alter: true }).then(() => {console.log('synced')}).catch((err) => {console.log('sequelize sync error: ', err)});
 })()
