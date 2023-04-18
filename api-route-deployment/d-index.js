@@ -24,7 +24,7 @@ app.use(express.urlencoded({ extended: false }));
 //   //let attempts = [];
 
 //   let data = await controllers.getQuestions(product_id).then(async (questions) => { // questions.results =
-//     for (var i = 0; i < questions.results.length; i++) {
+//
 
 //        questions.results[i].answers = await controllers.getAnswers(questions.results[i].question_id).then(async(answers) => { for (var j = 0; j < answers.length; j++) {  answers[j].photos = await controllers.getPhotos(answers[j].answer_id); }; return answers })};
 

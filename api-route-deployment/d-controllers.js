@@ -2,7 +2,6 @@ const Sequelize = require("sequelize");
 const database = require("./sequelize-models/Models.js");
 
 // const sequelize = new Sequelize('postgres://james:root@localhost:5432/questions_answers'); //build env file with login parameters
-
 // sequelize
 
 const getAnswers = async (id) => {//   .authenticate()

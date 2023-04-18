@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('postgres://james:root@localhost:5432/questions_answers', {query: {raw:true}}); //build env file with login parameters
+const sequelize = new Sequelize('postgres://james:root@localhost:5432/questions_answers', {query: {raw:true}}); //
 sequelize
 
   .authenticate()
